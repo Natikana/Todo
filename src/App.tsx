@@ -1,11 +1,9 @@
 import React, {useState} from 'react';
 import './App.css';
 import {TaskProps, Todo} from "./Components/Todo";
-import {Cars} from "./Components/Cars";
-import {Money} from "./Components/Money";
-import {FullInput} from "./Components/Input";
 import {InputNew} from "./Components/InputNew";
 import {ButtonNew} from "./Components/ButtonNew";
+import {v1} from "uuid";
 
 function App() {
 
@@ -58,12 +56,19 @@ function App() {
     const title1 = 'What to learn'
 
     const [tasks1, setTask1] = useState<TaskProps[]>([
-        {id: 1, title: "HTML&CSS", isDone: true},
-        {id: 2, title: "JS", isDone: true},
-        {id: 3, title: "ReactJS", isDone: false}
+        {id: v1(), title: "HTML&CSS", isDone: true},
+        {id: v1(), title: "JS", isDone: true},
+        {id: v1(), title: "ReactJS", isDone: false}
     ])
-    const removeTask = (id:number) => {
+    let[message1, setMessage1] = useState('')
+
+    const removeTask = (id:string) => {
         setTask1(tasks1.filter(el => el.id !== id))
+    }
+    const addMessageInpyt = (newMessage:string) => {
+        let newTitle = {id: v1(), title: newMessage, isDone: false}
+        setTask1([newTitle,...tasks1])
+
     }
 
     return (
@@ -72,6 +77,9 @@ function App() {
                 removeTask={removeTask}
                 name={title1}
                 task={tasks1}
+                addMessage={addMessageInpyt}
+                message1={message1}
+                setMessage1={setMessage1}
             />
             <InputNew
                 setCloth={setCloth}
